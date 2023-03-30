@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class AddressBook extends Contacts  {  
+public class AddressBook extends Contacts {
 
- Contacts contacts = new Contacts();
-Scanner scanner = new Scanner(System.in);
-	List<Contacts>Contacts = new ArrayList<Contacts>();
+	Contacts contacts = new Contacts();
+	Scanner scanner = new Scanner(System.in);
+	List<Contacts> Contacts = new ArrayList<Contacts>();
 
-	public void  addContacts() {
-		
-	
+	public void addContacts() {
+
 		System.out.println("Enter First Name : ");
 		String firstName = scanner.nextLine();
 		contacts.setFirstName(firstName);
@@ -45,10 +44,11 @@ Scanner scanner = new Scanner(System.in);
 		long phoneNumber = scanner.nextLong();
 		contacts.setPhoneNumber(phoneNumber);
 
-	  Contacts.add(contacts);
+		Contacts.add(contacts);
 		System.out.println("Person is Created Scussfully");
-	    
+
 	}
+
 	public void displayContacts() {
 		if (Contacts.isEmpty()) {
 			System.out.println("Address Book Is Empty");
@@ -62,7 +62,5 @@ Scanner scanner = new Scanner(System.in);
 		System.out.println(contacts.getZip());
 		System.out.println(contacts.getPhoneNumber());
 	}
-	
-	}
 
-
+}
