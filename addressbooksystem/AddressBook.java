@@ -53,14 +53,17 @@ public class AddressBook extends Contacts {
 		if (Contacts.isEmpty()) {
 			System.out.println("Address Book Is Empty");
 		}
-		System.out.println(contacts.address);
-		System.out.println(contacts.getLastName());
-		System.out.println(contacts.getAddress());
-		System.out.println(contacts.getCity());
-		System.out.println(contacts.getState());
-		System.out.println(contacts.getEmail());
-		System.out.println(contacts.getZip());
-		System.out.println(contacts.getPhoneNumber());
-	}
+		System.out.println("Address book");
+		for (Contacts contacts : Contacts) {
+			System.out.println(contacts.address);
+			System.out.println(contacts.getLastName());
+			System.out.println(contacts.getAddress());
+			System.out.println(contacts.getCity());
+			System.out.println(contacts.getState());
+			System.out.println(contacts.getEmail());
+			System.out.println(contacts.getZip());
+			System.out.println(contacts.getPhoneNumber());
+		}
 
+	}
 }
