@@ -8,28 +8,27 @@ public class AddressBookMain {
 
 		System.out.println("Welcome To Address Book System");
 		AddressBook addressBook = new AddressBook();
-		
+
 		Scanner scanner = new Scanner(System.in);
 		while (true) {
 			System.out.println("Enter 1 to add contacts");
 			System.out.println("Enter 2 to display all contacts");
 			System.out.println("Enter 3 to edit a contact");
 			System.out.println("Enter 0 to exit");
-			
+
 			int choice = scanner.nextInt();
-			
-			
-			switch(choice) {
-			case 0 :
-			System.out.println("Exiting Address Book");
-			System.exit(0);
-			
+
+			switch (choice) {
+			case 0:
+				System.out.println("Exiting Address Book");
+				System.exit(0);
+
 			case 1:
-			 addressBook.addContacts();
-			 break;
+				addressBook.addContacts();
+				break;
 			case 2:
 				addressBook.displayContacts();
-              break;
+				break;
 			case 3:
 				System.out.println("Enter the name of the contact to edit:");
 				String firstName = scanner.nextLine();
@@ -39,7 +38,7 @@ public class AddressBookMain {
 				break;
 			}
 		}
-		
+
 	}
 
 }

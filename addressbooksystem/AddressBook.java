@@ -66,48 +66,67 @@ public class AddressBook extends Contacts {
 		}
 
 	}
-public void editPerson( String firstName, String lastName) {
-	System.out.println("Enter the First name you want to edit. \n");
-	
-	 firstName = scanner.nextLine();
-	
-	for (int i = 0; i < Contacts.size();i++) {
-		if(Contacts.get(i).getFirstName().equals(firstName)) {
-			Contacts.get(i).setFirstName(firstName);
-			
-			System.out.println("Enter Last Name : ");
-			 lastName = scanner.nextLine();
-			Contacts.get(i).setLastName(lastName);
 
-			System.out.println("Enter Address :");
-			String address = scanner.nextLine();
-			Contacts.get(i).setAddress(address);
+	public void editPerson(String firstName, String lastName) {
+		System.out.println("Enter the First name you want to edit. \n");
 
-			System.out.println("Enter City : ");
-			String city = scanner.nextLine();
-			Contacts.get(i).setCity(city);
+		firstName = scanner.nextLine();
 
-			System.out.println("Enter State : ");
-			String state = scanner.nextLine();
-			Contacts.get(i).setState(state);
+		for (int i = 0; i < Contacts.size(); i++) {
+			if (Contacts.get(i).getFirstName().equals(firstName)) {
+				Contacts.get(i).setFirstName(firstName);
 
-			System.out.println("Enter Email : ");
-			String email = scanner.nextLine();
-			Contacts.get(i).setEmail(email);
+				System.out.println("Enter Last Name : ");
+				lastName = scanner.nextLine();
+				Contacts.get(i).setLastName(lastName);
 
-			System.out.println("Enter ZIP : ");
-			int zip = scanner.nextInt();
-			Contacts.get(i).setZip(zip);
+				System.out.println("Enter Address :");
+				String address = scanner.nextLine();
+				Contacts.get(i).setAddress(address);
 
-			System.out.println("Enter Phone Number");
-			long phoneNumber = scanner.nextLong();
-			Contacts.get(i).setPhoneNumber(phoneNumber);
-			
-			System.out.println("Person Edited Succesfully");
+				System.out.println("Enter City : ");
+				String city = scanner.nextLine();
+				Contacts.get(i).setCity(city);
+
+				System.out.println("Enter State : ");
+				String state = scanner.nextLine();
+				Contacts.get(i).setState(state);
+
+				System.out.println("Enter Email : ");
+				String email = scanner.nextLine();
+				Contacts.get(i).setEmail(email);
+
+				System.out.println("Enter ZIP : ");
+				int zip = scanner.nextInt();
+				Contacts.get(i).setZip(zip);
+
+				System.out.println("Enter Phone Number");
+				long phoneNumber = scanner.nextLong();
+				Contacts.get(i).setPhoneNumber(phoneNumber);
+
+				System.out.println("Person Edited Succesfully");
+			} else {
+				System.out.println("Person Not Found in Address Book ");
 			}
-		else {
-			System.out.println("Person Not Found in Address Book ");
 		}
 	}
-}
+
+	public void deleteContact(String firstName, String lastName) {
+		int index = -1;
+
+		for (int i = 0; i < Contacts.size(); i++) {
+			Contacts contact = Contacts.get(i);
+			if (contact.getFirstName().equals(firstName) && contact.getLastName().equals(lastName)) {
+				index = i;
+				break;
+
+			}
+		}
+		if (index >= 0) {
+			Contacts.remove(index);
+			System.out.println("Person deleted Successfully");
+		} else {
+			System.out.println("Person Is Not Found");
+		}
+	}
 }
