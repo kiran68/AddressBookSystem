@@ -66,4 +66,48 @@ public class AddressBook extends Contacts {
 		}
 
 	}
+public void editPerson( String firstName, String lastName) {
+	System.out.println("Enter the First name you want to edit. \n");
+	
+	 firstName = scanner.nextLine();
+	
+	for (int i = 0; i < Contacts.size();i++) {
+		if(Contacts.get(i).getFirstName().equals(firstName)) {
+			Contacts.get(i).setFirstName(firstName);
+			
+			System.out.println("Enter Last Name : ");
+			 lastName = scanner.nextLine();
+			Contacts.get(i).setLastName(lastName);
+
+			System.out.println("Enter Address :");
+			String address = scanner.nextLine();
+			Contacts.get(i).setAddress(address);
+
+			System.out.println("Enter City : ");
+			String city = scanner.nextLine();
+			Contacts.get(i).setCity(city);
+
+			System.out.println("Enter State : ");
+			String state = scanner.nextLine();
+			Contacts.get(i).setState(state);
+
+			System.out.println("Enter Email : ");
+			String email = scanner.nextLine();
+			Contacts.get(i).setEmail(email);
+
+			System.out.println("Enter ZIP : ");
+			int zip = scanner.nextInt();
+			Contacts.get(i).setZip(zip);
+
+			System.out.println("Enter Phone Number");
+			long phoneNumber = scanner.nextLong();
+			Contacts.get(i).setPhoneNumber(phoneNumber);
+			
+			System.out.println("Person Edited Succesfully");
+			}
+		else {
+			System.out.println("Person Not Found in Address Book ");
+		}
+	}
+}
 }
