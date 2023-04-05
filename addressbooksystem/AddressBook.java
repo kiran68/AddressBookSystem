@@ -11,6 +11,9 @@ public class AddressBook extends Contacts {
 	List<Contacts> Contacts = new ArrayList<Contacts>();
 
 	public void addContacts() {
+		
+		boolean addingContacts = true;
+		while (addingContacts) {
 
 		System.out.println("Enter First Name : ");
 		String firstName = scanner.nextLine();
@@ -46,7 +49,12 @@ public class AddressBook extends Contacts {
 
 		Contacts.add(contacts);
 		System.out.println("Person is Created Scussfully");
-
+		System.out.println("Do You Want To Add Another Person ? (Y/N)");
+		String choice = scanner.nextLine();
+				if (choice.equalsIgnoreCase("N")) {
+				addingContacts  = false;
+				}
+		}
 	}
 
 	public void displayContacts() {
