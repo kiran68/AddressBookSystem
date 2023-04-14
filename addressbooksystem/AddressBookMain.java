@@ -1,61 +1,72 @@
 package com.bridgelabz.addressbooksystem;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBookMain {
 
-	public static void main(String[] args) {
+	  Scanner scanner = new Scanner(System.in);
+	    Map<String, AddressBook> addressBooks = new HashMap<>();
 
-		System.out.println("Welcome To Address Book System");
-		AddressBook addressBook = new AddressBook();
+	    public void createAddressBook() {
+	        System.out.println("Enter a unique name for the new address book:");
+	        String name = scanner.nextLine();
+	        if (addressBooks.containsKey(name)) {
+	            System.out.println("Address book already exists with the given name.");
+	            return;
+	        }
+	        AddressBook addressBook = new AddressBook();
+	        addressBooks.put(name, addressBook);
+	        System.out.println("New address book created successfully with name: " + name);
+	    }
 
-		try (Scanner scanner = new Scanner(System.in)) {
-			while (true) {
-				System.out.println("Enter 1 to add contacts");
-				System.out.println("Enter 2 to display all contacts");
-				System.out.println("Enter 3 to edit a contact");
-				System.out.println("Enter 4 to delete a contact");
-				System.out.println("Enter 5 to Quit");
-				System.out.println("Enter 0 to exit");
+	    public void displayAddressBooks() {
+	        if (addressBooks.isEmpty()) {
+	            System.out.println("No address books found.");
+	            return;
+	        }
+	        System.out.println("List of address books:");
+	        for (String name : addressBooks.keySet()) {
+	            System.out.println(name);
+	        }
+	    }
 
-				int choice = scanner.nextInt();
-				scanner.nextLine();
+	    public void openAddressBook() {
+	        System.out.println("Enter the name of the address book you want to open:");
+	        String name = scanner.nextLine();
+	        AddressBook addressBook = addressBooks.get(name);
+	        if (addressBook == null) {
+	            System.out.println("No address book found with the given name.");
+	            return;
+	        }
+	    
+	    }
 
-				switch (choice) {
-				case 0:
-					System.out.println("Exiting Address Book");
-					System.exit(0);
-
-				case 1:
-					addressBook.addContacts();
-					break;
-				case 2:
-					addressBook.displayContacts();
-					break;
-				case 3:
-					System.out.println("Enter the name of the contact to edit:");
-					String firstName = scanner.nextLine();
-					System.out.println("Enter the last name of the contact to edit: ");
-					String lastName = scanner.nextLine();
-					addressBook.editPerson(firstName, lastName);
-					break;
-
-				case 4:
-					System.out.println("Enter the first name of the contact to delete :");
-					String firstName1 = scanner.nextLine();
-					System.out.println("Enter the last name of the contact delete:");
-					String lastName1 = scanner.nextLine();
-					addressBook.deleteContact(firstName1, lastName1);
-					break;
-				case 5:
-					System.exit(0);
-				default:
-					System.out.println("Contact details not found");
-
-				}
-			}
-		}
-
+	    public static void main(String[] args) {
+	        AddressBook addressBookSystem = new AddressBook();
+	        Scanner scanner = new Scanner(System.in);
+	        while (true) {
+	            System.out.println("Enter an option:\n1. Create address book\n2. Display address books\n3. Open address book\n4. Exit");
+	            int choice = scanner.nextInt();
+	            scanner.nextLine(); // consume the newline character
+	            switch (choice) {
+	                case 1:
+	                    addressBookSystem.createAddressBook();
+	                    break;
+	                case 2:
+	                    addressBookSystem.displayAddressBooks();
+	                    break;
+	                case 3:
+	                    addressBookSystem.openAddressBook();
+	                    break;
+	                case 4:
+	                    System.out.println("Exiting...");
+	                    System.exit(0);
+	                    break;
+	                default:
+	                    System.out.println("Invalid option.");
+	            }
+	        }
+	    }
 	}
-
-}
