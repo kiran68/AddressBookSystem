@@ -2,11 +2,12 @@
 package com.bridgelabz.addressbooksystem;
 
 import java.util.ArrayList;
-
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class AddressBookSystem extends Contacts {
 
@@ -199,6 +200,10 @@ public class AddressBookSystem extends Contacts {
 		}
 	}
 
+	public void sortContactsByName() {
+		Contacts.stream().sorted(FirstNameComparator).forEach(System.out::println);
+	}
+
 	public void displayContacts() {
 
 		if (Contacts.isEmpty()) {
@@ -281,3 +286,6 @@ public class AddressBookSystem extends Contacts {
 	}
 
 }
+	
+
+
