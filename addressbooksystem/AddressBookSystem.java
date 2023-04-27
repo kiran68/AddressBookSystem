@@ -1,8 +1,13 @@
 
 package com.bridgelabz.addressbooksystem;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -15,7 +20,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class AddressBookSystem extends Contacts {
-
+	
 	Contacts contacts = new Contacts();
 	Scanner scanner = new Scanner(System.in);
 	List<Contacts> Contacts = new ArrayList<Contacts>();
@@ -317,44 +322,38 @@ public class AddressBookSystem extends Contacts {
 		}
 		
 	}
-	 public void writeToAddressBookFile() {
-
-	        String bookName = this.getAddress();
-	        String fileName = bookName+".txt";
-
-	        StringBuffer addressBookBuffer = new StringBuffer();
-	        Contacts.stream().forEach(contact -> {
-	            String personDataString = contact.toString().concat("\n");
-	            addressBookBuffer.append(personDataString);
-	        });
-
-	        try {
-	            Files.write(Paths.get(fileName), addressBookBuffer.toString().getBytes());
+	 public void writeToFile(String filename) {
+	        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+	            for (Contacts person : Contacts) {
+	                writer.println(person.getFirstName() + "\n " + person.getLastName() + " \n" + person.getEmail()+ "\n" + person.getAddress() + " \n" + person.getPhoneNumber()+ "\n" + person.getCity());
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
 	        }
+	    }
+
+	    public void readFromFile(String filename) {
+	        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+	            String line;
+	            while ((line = reader.readLine()) != null) {
+	                String[] tokens = line.split(",");
+	                if (tokens.length == 6) {
+	                    String firstName = tokens[0];
+	                    String lastName = tokens [1];
+	                    String email = tokens[2];
+	                    String address = tokens[3];
+	                    String phoneNumber = tokens[4];
+	                    String city = tokens[5];
+	                    
+	                   
+	                    Contacts person = new Contacts();
+	                    addContacts();
+	                }
+	            }
+	        } 
 	        catch (IOException e) {
 	            e.printStackTrace();
 	        }
-
-	    }
-	 public List<String> readDataFromFile() {
-
-	        List<String> addressBookList = new ArrayList<String>();
-	        String bookName = this.getAddress();
-	        String fileName = bookName+".txt";
-	        System.out.println("Reading from : "+fileName+"\n");
-	        try {
-	            Files.lines(new File(fileName).toPath())
-	                    .map(line -> line.trim())
-	                    .forEach(employeeDetails -> {
-	                        System.out.println(employeeDetails);
-	                        addressBookList.add(employeeDetails);
-	                    });
-
-	        }
-	        catch(IOException e){
-	            e.printStackTrace();
-	        }
-	        return addressBookList;
 	    }
 }
 
