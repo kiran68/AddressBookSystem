@@ -17,6 +17,7 @@ package com.bridgelabz.advaddressbook;
 		   
 			AddressBookSystemJDBC addressBookSystemJdbc = new AddressBookSystemJDBC();
 			addressBookSystemJdbc.retrieveData();
+			addressBookSystemJdbc.updateContactInformation(8);
 			
 		}
 
