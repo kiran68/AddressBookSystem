@@ -1,6 +1,11 @@
 package com.bridgelabz.advaddressbook;
 
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -9,32 +14,37 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
 
 public class AddressBookSystemJDBC extends BaseDemo {
 
-    public void retrieveData() throws SQLException {
-        connection = setUpDatabase();
-        Statement statement = connection.createStatement();
-        String query = "SELECT * FROM address_book";
-        ResultSet resultSet = statement.executeQuery(query);
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String firstName = resultSet.getString("first_name");
-            String lastName = resultSet.getString("last_name");
-            String address = resultSet.getString("address");
-            String city = resultSet.getString("city");
-            String state = resultSet.getString("state");
-            String zip = resultSet.getString("zip");
-            String email = resultSet.getString("email");
-            long phone= resultSet.getLong("phone");
-            String name = resultSet.getString("name");
-            String type = resultSet.getString("type");
-            System.out.println(id + " " + firstName + " " + lastName + " " + address + " " + city + " " + state + " "
-                    + zip + " " + email + " " + phone + " " + name + " " + type);
-        }
-        System.out.println("Retrieve all the data from the addressbook table");
-    }
+	public void retrieveData() throws SQLException {
+		connection = setUpDatabase();
+		Statement statement = connection.createStatement();
+		String query = "SELECT * FROM address_book";
+		ResultSet resultSet = statement.executeQuery(query);
+		while (resultSet.next()) {
+			int id = resultSet.getInt("id");
+			String firstName = resultSet.getString("first_name");
+			String lastName = resultSet.getString("last_name");
+			String address = resultSet.getString("address");
+			String city = resultSet.getString("city");
+			String state = resultSet.getString("state");
+			String zip = resultSet.getString("zip");
+			String email = resultSet.getString("email");
+			long phone = resultSet.getLong("phone");
+			String name = resultSet.getString("name");
+			String type = resultSet.getString("type");
+			System.out.println(id + " " + firstName + " " + lastName + " " + address + " " + city + " " + state + " "
+					+ zip + " " + email + " " + phone + " " + name + " " + type);
+		}
+		System.out.println("Retrieve all the data from the addressbook table");
+	}
 
 	/*
 	 * public void updateContactInformation(int id) throws SQLException { connection
@@ -93,8 +103,8 @@ public class AddressBookSystemJDBC extends BaseDemo {
 	 * System.out.println("Contact information update failed."); } } else {
 	 * System.out.println("No contact found with ID " + id); } connection.close();
 	 */
-    
-    public void retrieveData(LocalDate startDate, LocalDate endDate) throws SQLException {
+
+	public void retrieveData(LocalDate startDate, LocalDate endDate) throws SQLException {
 		connection = setUpDatabase();
 		PreparedStatement preparedStatement = connection
 				.prepareStatement("SELECT * FROM address_book WHERE date_joining BETWEEN ? AND ?");
@@ -120,7 +130,8 @@ public class AddressBookSystemJDBC extends BaseDemo {
 		System.out.println("Retrieved data from the addressbook table for the date range between "
 				+ startDate.toString() + " and " + endDate.toString());
 	}
-    public int getContactsCountByCityOrState(String cityOrState) throws SQLException {
+
+	public int getContactsCountByCityOrState(String cityOrState) throws SQLException {
 		connection = setUpDatabase();
 		String query = "select count(*) from address_book where city=? OR state=?";
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -132,7 +143,8 @@ public class AddressBookSystemJDBC extends BaseDemo {
 		System.out.println("Number of contacts in " + cityOrState + ": " + count);
 		return count;
 	}
-    public void addContact(String firstName, String lastName, String address, String city, String state, String email,
+
+	public void addContact(String firstName, String lastName, String address, String city, String state, String email,
 			String phone, String zip, String type, String name, LocalDate dateJoining) throws SQLException {
 		connection = setUpDatabase();
 		String query = "INSERT INTO address_book (first_name, last_name, address, city, state, email, phone, zip, type, name, date_joining) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -162,5 +174,66 @@ public class AddressBookSystemJDBC extends BaseDemo {
 		System.out.println("Name: " + name);
 		System.out.println("Type: " + type);
 	}
-}
 
+	public void addContactJS(String firstName, String lastName, String address, String city, String state, String email,
+			String phone, String zip, String type, String name, LocalDate date_Joining) throws SQLException {
+		connection = setUpDatabase();
+		String query = "INSERT INTO address_book (first_name, last_name, address, city, state, email, phone, zip, type, name, date_joining) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		PreparedStatement preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setString(1, firstName);
+		preparedStatement.setString(2, lastName);
+		preparedStatement.setString(3, address);
+		preparedStatement.setString(4, city);
+		preparedStatement.setString(5, state);
+		preparedStatement.setString(6, email);
+		preparedStatement.setString(7, phone);
+		preparedStatement.setString(8, zip);
+		preparedStatement.setString(9, type);
+		preparedStatement.setString(10, name);
+		preparedStatement.setDate(11, Date.valueOf(date_Joining));
+		preparedStatement.executeUpdate();
+		System.out.println("New contact added successfully");
+		System.out.println("Contact added successfully:");
+		System.out.println("First name: " + firstName);
+		System.out.println("Last name: " + lastName);
+		System.out.println("Address: " + address);
+		System.out.println("City: " + city);
+		System.out.println("State: " + state);
+		System.out.println("Zip: " + zip);
+		System.out.println("Phone number: " + phone);
+		System.out.println("Email: " + email);
+		System.out.println("Name: " + name);
+		System.out.println("Type: " + type);
+	}
+
+	private static final String SERVER_URL = "jdbc:mysql://localhost:3306/address_book_system_service";
+
+	private static final ObjectMapper objectMapper = new ObjectMapper();
+
+	public static List<Contacts> readContacts() throws IOException {
+		URL url = new URL(SERVER_URL);
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		con.setRequestMethod("GET");
+
+		if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+			CollectionType listType = objectMapper.getTypeFactory().constructCollectionType(List.class, Contacts.class);
+			return objectMapper.readValue(con.getInputStream(), listType);
+		} else {
+			throw new RuntimeException("Failed to retrieve contacts from server: " + con.getResponseMessage());
+		}
+	}
+
+	public static void writeContacts(List<Contacts> contacts) throws IOException {
+		URL url = new URL(SERVER_URL);
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("Content-Type", "application/json");
+		con.setDoOutput(true);
+
+		objectMapper.writeValue(con.getOutputStream(), contacts);
+
+		if (con.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+			throw new RuntimeException("Failed to write contacts to server: " + con.getResponseMessage());
+		}
+	}
+}
