@@ -1,10 +1,13 @@
 package com.bridgelabz.advaddressbook;
 
 	import java.sql.Connection;
+	import java.util.Date;
 	import java.sql.Driver;
 	import java.sql.DriverManager;
 	import java.sql.SQLException;
 	import java.util.Enumeration;
+	import java.time.LocalDate;
+
 
 	public class BaseDemo {
 
@@ -17,8 +20,12 @@ package com.bridgelabz.advaddressbook;
 		   
 			AddressBookSystemJDBC addressBookSystemJdbc = new AddressBookSystemJDBC();
 			addressBookSystemJdbc.retrieveData();
-			addressBookSystemJdbc.updateContactInformation(8);
-			
+			//addressBookSystemJdbc.updateContactInformation(8);
+			AddressBookSystem addressBookSystem = new AddressBookSystem();
+		
+			LocalDate startDate = LocalDate.of(2021, 05, 01);
+			LocalDate endDate = LocalDate.of(2022, 12, 31);
+			addressBookSystemJdbc.retrieveData(startDate, endDate);
 		}
 
 		public static Connection setUpDatabase() {
