@@ -26,6 +26,7 @@ package com.bridgelabz.advaddressbook;
 			LocalDate startDate = LocalDate.of(2021, 05, 01);
 			LocalDate endDate = LocalDate.of(2022, 12, 31);
 			addressBookSystemJdbc.retrieveData(startDate, endDate);
+			addressBookSystemJdbc.getContactsCountByCityOrState("Aurangabad");
 		}
 
 		public static Connection setUpDatabase() {

@@ -120,5 +120,17 @@ public class AddressBookSystemJDBC extends BaseDemo {
 		System.out.println("Retrieved data from the addressbook table for the date range between "
 				+ startDate.toString() + " and " + endDate.toString());
 	}
+    public int getContactsCountByCityOrState(String cityOrState) throws SQLException {
+		connection = setUpDatabase();
+		String query = "select count(*) from address_book where city=? OR state=?";
+		PreparedStatement preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setString(1, cityOrState);
+		preparedStatement.setString(2, cityOrState);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		resultSet.next();
+		int count = resultSet.getInt(1);
+		System.out.println("Number of contacts in " + cityOrState + ": " + count);
+		return count;
+	}
 }
 
